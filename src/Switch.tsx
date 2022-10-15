@@ -1,5 +1,5 @@
 import React from 'react';
-import {Pressable, StyleSheet, View} from 'react-native';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 
 interface ISwitchProps {
   isEnabled: boolean;
@@ -11,9 +11,12 @@ export const Switch: React.FC<ISwitchProps> = ({isEnabled, onToggle}) => {
   const innerStyle = isEnabled ? styles.active : styles.inactive;
 
   return (
-    <Pressable style={styles.container} onPress={onToggle}>
+    <TouchableOpacity
+      style={styles.container}
+      onPress={onToggle}
+      activeOpacity={0.8}>
       <View style={[styles.innerControl, innerStyle]} />
-    </Pressable>
+    </TouchableOpacity>
   );
 };
 

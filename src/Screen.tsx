@@ -10,7 +10,11 @@ export const Screen: React.FC<IScreenProps> = () => {
 
   return (
     <View style={styles.screen}>
-      <MenuItem value={switchValue} changeValue={setSwitchValue} />
+      <MenuItem
+        value={switchValue}
+        changeValue={setSwitchValue}
+        label="Press on me too !!!"
+      />
     </View>
   );
 };
