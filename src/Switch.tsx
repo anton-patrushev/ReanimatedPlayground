@@ -30,7 +30,7 @@ export const Switch: React.FC<ISwitchProps> = ({isEnabled, onToggle}) => {
       backgroundColor: interpolateColor(
         sharedValue.value,
         [0, 1],
-        ['#ff0000', '#00ff00'],
+        ['#ffffff', '#ff0000'],
       ),
     };
   });
