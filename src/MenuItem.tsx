@@ -7,18 +7,14 @@ interface IMenuItemProps {
   value: boolean;
   label: string;
 
-  changeValue(newValue: boolean): void;
+  toggleValue(): void;
 }
 
 export const MenuItem: React.FC<IMenuItemProps> = ({
   value,
-  changeValue,
+  toggleValue,
   label,
 }) => {
-  const toggleValue = () => {
-    changeValue(!value);
-  };
-
   return (
     <TouchableOpacity
       style={styles.item}
