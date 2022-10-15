@@ -1,32 +1,43 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 
 import {Switch} from './Switch';
 
 interface IMenuItemProps {
   value: boolean;
+  label: string;
 
-  changeValue(newValue: boolean): void;
+  toggleValue(): void;
 }
 
-export const MenuItem: React.FC<IMenuItemProps> = ({value, changeValue}) => {
-  const toggleValue = () => {
-    changeValue(!value);
-  };
-
+export const MenuItem: React.FC<IMenuItemProps> = ({
+  value,
+  toggleValue,
+  label,
+}) => {
   return (
-    <View style={styles.item}>
+    <TouchableOpacity
+      style={styles.item}
+      onPress={toggleValue}
+      activeOpacity={0.8}>
       <Switch isEnabled={value} onToggle={toggleValue} />
-    </View>
+      <Text style={styles.label}>{label}</Text>
+    </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   item: {
     height: 100,
-    width: '100%',
+    width: '80%',
     backgroundColor: '#b4b4b4',
     justifyContent: 'center',
     alignItems: 'center',
+    padding: 20,
+    margin: 20,
+    borderRadius: 10,
+  },
+  label: {
+    paddingTop: 20,
   },
 });
