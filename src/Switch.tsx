@@ -1,5 +1,12 @@
-import React from 'react';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import React, {useEffect} from 'react';
+import {StyleSheet, TouchableOpacity} from 'react-native';
+import Animated, {
+  interpolate,
+  useSharedValue,
+  withTiming,
+  useAnimatedStyle,
+  interpolateColor,
+} from 'react-native-reanimated';
 
 interface ISwitchProps {
   isEnabled: boolean;
@@ -8,14 +15,32 @@ interface ISwitchProps {
 }
 
 export const Switch: React.FC<ISwitchProps> = ({isEnabled, onToggle}) => {
-  const innerStyle = isEnabled ? styles.active : styles.inactive;
+  const sharedValue = useSharedValue(0);
+
+  useEffect(() => {
+    sharedValue.value = withTiming(isEnabled ? 1 : 0, {duration: 200});
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isEnabled]);
+
+  const animatedStyles = useAnimatedStyle(() => {
+    return {
+      transform: [
+        {translateX: interpolate(sharedValue.value, [0, 1], [0, 26])},
+      ],
+      backgroundColor: interpolateColor(
+        sharedValue.value,
+        [0, 1],
+        ['#ff0000', '#00ff00'],
+      ),
+    };
+  });
 
   return (
     <TouchableOpacity
       style={styles.container}
       onPress={onToggle}
       activeOpacity={0.8}>
-      <View style={[styles.innerControl, innerStyle]} />
+      <Animated.View style={[styles.innerControl, animatedStyles]} />
     </TouchableOpacity>
   );
 };
@@ -33,11 +58,5 @@ const styles = StyleSheet.create({
     height: 24,
     borderRadius: 12,
     top: -2,
-  },
-  active: {
-    transform: [{translateX: 26}],
-  },
-  inactive: {
-    transform: [{translateX: 0}],
   },
 });
